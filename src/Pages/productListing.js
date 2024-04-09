@@ -109,7 +109,8 @@ export default function ProductListing() {
                         <div className="product-price">
                           <span>
                             <span className="product-discountedPrice">
-                              Rs.{item?.pricing}
+                              {console.log("firsttttttttt",JSON.parse(item?.product_pack[0])[0].price)}
+                              Rs.{`${JSON.parse(item?.product_pack[0])[0].price}/${JSON.parse(item?.product_pack[0])[0].size}`}
                             </span>
                             {/* <span className="product-strike">Rs. 1299</span> */}
                           </span>

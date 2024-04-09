@@ -79,7 +79,7 @@ export default function FeaturedItems({ categoryList }) {
           slidesToShow: 3.5,
           slidesToScroll: 3.5,
           autoplay: false,
-          speed: 1000,
+          speed: 500,
           autoplaySpeed: 7000,
           gap: 10,
         },
@@ -233,7 +233,6 @@ export default function FeaturedItems({ categoryList }) {
             height:105px;
             overflow:hidden;
           }
-          
                  
           .img_wrap{
             position:relative;

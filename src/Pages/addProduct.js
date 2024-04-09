@@ -14,6 +14,7 @@ const AddProduct = () => {
   const navigate = useNavigate()
   const [categoryList, setCategoryList] = useState([])
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
   let { token } = getCookies("token");
 
 
@@ -84,6 +85,7 @@ const AddProduct = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true)
       const formData = new FormData();
 
       // Append each field of productDetail to formData
@@ -103,10 +105,12 @@ const AddProduct = () => {
       const response = await addProduct(formData)
       console.log(response);
       if (response?.result.length) {
+        setLoading(false)
         alert(response?.message);
         navigate('/listing');
       }
     } catch (error) {
+      setLoading(false)
       console.error("Error:", error);
     }
   };
@@ -304,6 +308,18 @@ const AddProduct = () => {
               />
             </Grid>
             <Grid item xs={12} mt={3}>
+              {loading?
+              <Button
+                onClick={handleClick}
+                variant="contained"
+                fullWidth
+                margin="normal"
+                disabled={true}
+                style={{ padding: "10px" }}
+              >
+                Product Adding...
+              </Button>
+              :
               <Button
                 onClick={handleClick}
                 variant="contained"
@@ -313,6 +329,7 @@ const AddProduct = () => {
               >
                 Add Product
               </Button>
+              }
             </Grid>
           </Grid>
         </Paper>

@@ -13,6 +13,7 @@ import { getUsercartData } from '../../Api/Services/user';
 import { useDispatch, useSelector } from 'react-redux';
 import { addDataTocart } from '../../Redux/action';
 import { toastError, toastSuccess } from '../../helpers/toastHelper';
+import { getCookies } from '../../helpers/cookiehelper';
 
 
 
@@ -22,6 +23,7 @@ export default function LongMenu({ viewProduct, packs, product_id }) {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    let { logged_in } = getCookies("logged_in");
     const [dialogOpen, setDialogOpen] = React.useState(false);
     const [options, setOptions] = React.useState(['Add Product', 'View Product'])
     const [packPrice, setPackPrice] = React.useState([packs[0]?.price])
@@ -92,6 +94,10 @@ export default function LongMenu({ viewProduct, packs, product_id }) {
         setAnchorEl(null);
     };
     const addProductHandler = () => {
+        if (!logged_in) {
+            navigate('/login')
+            return
+          }
         let bodyData = {
             product_id,
             product_pack: selectedPack
@@ -108,17 +114,29 @@ export default function LongMenu({ viewProduct, packs, product_id }) {
 
     return (
         <div>
+            {options[0] == 'Add Product' ?
             <IconButton
                 aria-label="more"
                 id="long-button"
                 aria-controls={open ? 'long-menu' : undefined}
                 aria-expanded={open ? 'true' : undefined}
                 aria-haspopup="true"
-                onClick={handleClick}
+                onClick={ (e)=>handleClose(options[0])}
             >
-                <MoreVertIcon />
-            </IconButton>
-            <Menu
+                 < AddIcon />
+            </IconButton>:
+             <IconButton
+             aria-label="more"
+             id="long-button"
+             aria-controls={open ? 'long-menu' : undefined}
+             aria-expanded={open ? 'true' : undefined}
+             aria-haspopup="true"
+             onClick={(e)=> handleClose(options[0])}
+         >
+             <ShoppingCartIcon />
+         </IconButton>
+            }
+            {/* <Menu
                 id="long-menu"
                 MenuListProps={{
                     'aria-labelledby': 'long-button',
@@ -140,7 +158,7 @@ export default function LongMenu({ viewProduct, packs, product_id }) {
                         </Button>
                     </MenuItem>
                 ))}
-            </Menu>
+            </Menu> */}
             <Dialog
                 open={dialogOpen}
                 onClose={openDialog}

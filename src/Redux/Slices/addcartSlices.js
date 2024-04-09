@@ -45,7 +45,7 @@ const addcartSlice = createSlice({
     .addCase(removeDatafromCart.fulfilled, (state, action) => {
         // console.log("action from api", action)
         state.status = 'succeeded';
-        state.data.push(action.payload.result.cart_items)
+        state.data=(action.payload.result.cart_items)
     })
     .addCase(removeDatafromCart.rejected, (state, action) => {
         state.status = 'failed';

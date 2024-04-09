@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 export default function Header() {
 
   const ref = useRef()
+  const navigate = useNavigate();
   const [checkedMenu, setCheckedMenu] = useState(false)
   const userData = useSelector((state)=>state.addcart.data);
   const [cartData, setcartData] = useState(userData.length||0)
@@ -39,7 +40,7 @@ export default function Header() {
   }, []);
 
 
-  let menus = [{ url: '/', slug: "Home" }, { url: '/account', slug: "Profile" }, { url: "/listing", slug: "Product List" }, { url: "/", slug: "Contact-Us" }, { url: "/", slug: "Logout" }]
+  let menus = [{ url: '/', slug: "Home" }, { url: !logged_in?'/login':'/account', slug: "Profile" }, { url: "/listing", slug: "Product List" }, { url: "/", slug: "Contact-Us" }, { url: "/", slug: "Logout" }]
   const closeMenu = (e) => {
     let checkedMen = document.getElementById("menu-toggle") && document.getElementById("menu-toggle").checked
     if (checkedMen) {
@@ -59,7 +60,7 @@ export default function Header() {
     removeCookies('logged_in', 'role', 'token')
     // Cookies.remove('logged_in')
     // Cookies.remove('role')
-    // navigate('/')
+    navigate('/')
   }
 
   return (
@@ -108,7 +109,7 @@ export default function Header() {
 
           <div className="action-container">
             <div className="actions">
-              <Link to='/account' >
+              <Link to={!logged_in?'/login':'/account'} >
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

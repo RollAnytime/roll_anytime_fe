@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import {toastError, toastInfo, toastSuccess } from '../helpers/toastHelper';
 import { getUsercartData } from '../Api/Services/user';
 import { addDataTocart } from '../Redux/action';
+import { getCookies } from '../helpers/cookiehelper';
 
 
 export default function Productdetail() {
@@ -20,6 +21,8 @@ export default function Productdetail() {
 
   const { product_id } = useParams();
   // console.log("product id ", product_id)
+  let { logged_in } = getCookies("logged_in");
+
   const [rentPrice, setRentPrice] = useState('')
   const [selectedPack, setSelectedPack] = useState({})
   const [productStatus, setProductStatus] = useState(false)
@@ -38,8 +41,11 @@ export default function Productdetail() {
 
   useEffect(() => {
     ; (async () => {
-      let cartResult = await getUsercartData();
-      checkFilter(product_id,cartResult)
+      if(logged_in){
+
+        let cartResult = await getUsercartData();
+        checkFilter(product_id,cartResult)
+      }
       let result = await getProductDetails(product_id);
       if (result?.result.length) {
         setProductDetail(result?.result[0])
@@ -68,16 +74,23 @@ export default function Productdetail() {
 
 
   const handleAddtoCart = (item) => {
-    let bodyData = {
-      product_id: item?.product_id,
-      product_pack: selectedPack
+    if (!logged_in) {
+      navigate('/login')
+      return
     }
-    try {
-      dispatch(addDataTocart(bodyData))
-      toastSuccess('Item added to cart!');
-      setGoCartButton(true)
-    } catch (error) {
-      toastError(error.message); // Display error message if adding item fails
+    else{
+
+      let bodyData = {
+        product_id: item?.product_id,
+        product_pack: selectedPack
+      }
+      try {
+        dispatch(addDataTocart(bodyData))
+        toastSuccess('Item added to cart!');
+        setGoCartButton(true)
+      } catch (error) {
+        toastError(error.message); // Display error message if adding item fails
+      }
     }
   }
 
