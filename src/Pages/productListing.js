@@ -41,46 +41,8 @@ export default function ProductListing() {
   return (
     <>
       <div className="row-base">
-        <div className="search-leftContainer column-base">
-          <section>
-            <div className="condition-render-verticalFilters condition-render-boundary-top">
-              <div className="vertical-filters-filters header-container">
-                <span className="header-title">FILTERS</span>
-              </div>
-              <div className="vertical-filters-filters categories-container">
-                <span className="vertical-filters-header "> CATEGORIES</span>
-                <ul className="categories-list">
-                  <li>
-                    <label className="common-customCheckbox vertical-filters-label">
-                      <input type="checkbox" value="Tshirts" />
-                      "Tshirts"
-                      <span className="categories-num"></span>
-                      <div className="common-checkboxIndicator"></div>
-                    </label>
-                  </li>
-                  <li>
-                    <label className="common-customCheckbox vertical-filters-label">
-                      <input type="checkbox" value="Tshirts" />
-                      "Tshirts"
-                      <span className="categories-num"></span>
-                      <div className="common-checkboxIndicator"></div>
-                    </label>
-                  </li>
-                  <li>
-                    <label className="common-customCheckbox vertical-filters-label">
-                      <input type="checkbox" value="Tshirts" />
-                      "Tshirts"
-                      <span className="categories-num"></span>
-                      <div className="common-checkboxIndicator"></div>
-                    </label>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </section>
-        </div>
         <div className="search-rightContainer column-base">
-          <TopStrip />
+          <TopStrip setProductList={setProductList} productList={productList}/>
           <div className="search-searchProductsContainer row-base">
             <section style={{ display: "block" }}>
               <ul className="results-base">
@@ -109,7 +71,7 @@ export default function ProductListing() {
                         <div className="product-price">
                           <span>
                             <span className="product-discountedPrice">
-                              {console.log("firsttttttttt",JSON.parse(item?.product_pack[0])[0].price)}
+                              {/* {console.log("firsttttttttt",JSON.parse(item?.product_pack[0])[0].price)} */}
                               Rs.{`${JSON.parse(item?.product_pack[0])[0].price}/${JSON.parse(item?.product_pack[0])[0].size}`}
                             </span>
                             {/* <span className="product-strike">Rs. 1299</span> */}
@@ -303,31 +265,15 @@ export default function ProductListing() {
             padding-top: 24px;
             padding-left: 15px;
             padding-right: 20px;
+            margin-bottom:140px;
           }
           .row-base {
             display: flexbox;
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
-            -webkit-box-orient: horizontal;
-            -ms-flex-direction: row;
-            flex-direction: row;
-            -ms-flex-wrap: wrap;
-            flex-wrap: wrap;
-            -webkit-box-pack: start;
-            -ms-flex-pack: start;
-            justify-content: flex-start;
-            -webkit-box-align: stretch;
-            -ms-flex-align: stretch;
-            align-items: stretch;
-            -ms-flex-line-pack: stretch;
-            align-content: stretch;
-          }
-          .row-base {
-            display: flexbox;
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
+            position:relative;
+            top:75px;
             -webkit-box-orient: horizontal;
             -ms-flex-direction: row;
             flex-direction: row;

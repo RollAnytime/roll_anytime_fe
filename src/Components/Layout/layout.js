@@ -19,6 +19,7 @@ export default function Layout() {
 
   useEffect(() => {
     if (logged_in == 'true') {
+      console.log("logged in")
       dispatch(fetchCartData())      
     }
   }, []);
@@ -27,9 +28,9 @@ export default function Layout() {
       <div className="container">
         <GlobalContext.Provider value={{users,setUsers}}>
           <Header />
-          {!(location.pathname == '/cart'||location.pathname == '/addProduct')? 
+          {logged_in ?!(location.pathname == '/cart'||location.pathname == '/addProduct')? 
           isMobile?<Level2Header title="Level 2 Header" />:<BubbleComponent />
-          :null}
+          :null:null}
           
           <Outlet />
         <Footer />

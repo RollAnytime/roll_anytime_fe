@@ -3,6 +3,11 @@ export function capitalizeFirstLetter(string) {
   }
 
 export function totalsumCartPrice(arr){
-  let result =arr.reduce(function (acc, obj) { return acc +Number(obj.product_pack[0].price) }, 0);
-  return result;
+  try {
+    
+    let result =arr.reduce(function (acc, obj) { return acc +Number(obj.product_pack[0].price) }, 0);
+    return result;
+  } catch (error) {
+    console.log(error)
+  }
 }

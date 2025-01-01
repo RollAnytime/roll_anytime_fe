@@ -12,6 +12,8 @@ export default function SignIn() {
   const navigate = useNavigate()
   let dispatch = useDispatch();
   const {setAuth} = useContext(UserContext);
+  const [loading, setLoading] = useState(false)
+  const [btndisable, setBtndisable] = useState(false)
   const [values, setValues] = useState({
     emailphone: "",
     password: "",
@@ -27,7 +29,8 @@ function validatePhoneNumber(input_str) {
       setValues({...values,[e.target.name]:e.target.value});
   }
   const onSubmit= async (e)=>{
-
+    setLoading(true)
+    setBtndisable(true)
     let countryCode = "+91";
 
     if(validatePhoneNumber(values.emailphone)){
@@ -37,6 +40,8 @@ function validatePhoneNumber(input_str) {
     let response = await signInUser(values);
     console.log("response from login",response,response?.status == 200)
     if(response?.token){
+      setLoading(false)
+      setBtndisable(false)
       setAuth(true)
       console.log("naviagteion")
       dispatch(fetchCartData())
@@ -58,7 +63,7 @@ function validatePhoneNumber(input_str) {
             </div>            
           ))}
           <div className="pass">Forgot password?</div>
-          <button type="submit">Sign in</button>
+          <button type="submit" disabled={btndisable}>{!loading?'Sign in':'Loading...'}</button>
           <div className="signup_link">
             Not a member ? <Link to="/signup"> sign up</Link>
           </div>
